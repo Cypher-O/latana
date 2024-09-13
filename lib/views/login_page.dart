@@ -181,7 +181,7 @@ class LoginPage extends StackedView<LoginViewModel> {
             children: [
               TextSpan(
                 text: 'Not ${viewModel.userName}? ',
-                style: const TextStyle(color: Colors.black),
+                style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
               ),
               const TextSpan(
                 text: 'Switch Account',

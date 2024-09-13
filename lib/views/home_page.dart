@@ -67,6 +67,9 @@ class HomePage extends StackedView<HomeViewModel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(
+          height: 10.0,
+        ),
         Text(
           'Watch and learn how to use',
           style: TextStyle(fontSize: 16, color: Colors.grey[600]),
@@ -115,11 +118,11 @@ class HomePage extends StackedView<HomeViewModel> {
       children: [
         const Text(
           'Continue Learning',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
         ),
         const SizedBox(height: 10),
         Container(
-          height: 200,
+          height: 300,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: const DecorationImage(
@@ -144,7 +147,7 @@ class HomePage extends StackedView<HomeViewModel> {
           children: [
             Text(
               'Try a Challenge',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
             ),
             Text(
               'View all',
@@ -162,25 +165,31 @@ class HomePage extends StackedView<HomeViewModel> {
       ],
     );
   }
-
+  
   Widget _buildChallengeCard(Challenge challenge) {
     return Container(
-      width: 100,
-      padding: const EdgeInsets.all(8),
+      width: 110,
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: challenge.color.withOpacity(0.2),
+        color: challenge.color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(challenge.icon, color: challenge.color),
-          const SizedBox(height: 5),
+          challenge.icon is IconData
+              ? Icon(challenge.icon as IconData,
+                  color: challenge.color, size: 24)
+              : SizedBox(
+                  width: 24, height: 24, child: challenge.icon as Widget),
+          const SizedBox(height: 8),
           Text(challenge.name,
-              style: const TextStyle(fontWeight: FontWeight.bold)),
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
           Text(challenge.description, style: const TextStyle(fontSize: 12)),
+          const SizedBox(height: 4),
           Text(challenge.duration,
-              style: const TextStyle(fontSize: 12, color: Colors.grey)),
+              style: TextStyle(fontSize: 10, color: Colors.grey[600])),
         ],
       ),
     );
