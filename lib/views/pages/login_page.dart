@@ -20,7 +20,6 @@ class LoginPage extends StackedView<LoginViewModel> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 30),
-              // _buildWelcomeText(viewModel),
               CustomText(
                 'Welcome back,\n${viewModel.userName}!',
                 fontSize: 28,

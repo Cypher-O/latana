@@ -6,7 +6,7 @@ Widget buildLoginButton(BuildContext context, LoginViewModel viewModel) {
   return SizedBox(
     width: double.infinity,
     child: ElevatedButton(
-      onPressed: () => viewModel.login(context),
+      onPressed: () => viewModel.login(),
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color(0xFF272d3b),
         padding: const EdgeInsets.symmetric(vertical: 16),

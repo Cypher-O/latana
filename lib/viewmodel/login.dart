@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:latana/views/pages/home_page.dart';
+import 'package:latana/app/app.locator.dart';
+import 'package:latana/app/app.router.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class LoginViewModel extends BaseViewModel {
-  // final _navigationService = locator<NavigationService>();
+  final _navigationService = locator<NavigationService>();
 
   String get userName => 'Owolu';
   bool _isPasswordVisible = false;
@@ -15,16 +16,17 @@ class LoginViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void login(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const HomePage()),
-    );
+  // void login(BuildContext context) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => const HomePage()),
+  //   );
+  // }
+
+   void login() {
+    _navigationService.navigateTo(Routes.homePage);
   }
 
-  void switchAccount() {
-    // Implement account switching logic
-    // For example:
-    // _navigationService.replaceWith(Routes.accountSelectionView);
-  }
+
+  void switchAccount() {}
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:latana/views/pages/login_page.dart';
+import 'package:latana/app/app.locator.dart';
+import 'package:latana/app/app.router.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 void main() {
+  setupLocator();
   runApp(const MyApp());
 }
 
@@ -17,9 +20,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
-      // navigatorKey: StackedService.navigatorKey,
-      // onGenerateRoute: StackedRouter().onGenerateRoute,
+      // home: const LoginPage(),
+      initialRoute: Routes.loginPage,
+      onGenerateRoute: StackedRouter().onGenerateRoute,
+      navigatorKey: StackedService.navigatorKey,
     );
   }
 }
