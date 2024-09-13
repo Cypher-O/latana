@@ -19,7 +19,13 @@ class HomePage extends StackedView<HomeViewModel> {
               _buildHeader(viewModel),
               const SizedBox(height: 20),
               _buildLearnSection(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
+              const Divider(
+                color: Colors.grey,
+                thickness: 1,
+                indent: 16,
+                endIndent: 16,
+              ),
               _buildContinueLearning(),
               const SizedBox(height: 20),
               _buildChallenges(viewModel),
@@ -49,14 +55,21 @@ class HomePage extends StackedView<HomeViewModel> {
             ),
           ],
         ),
-        const Row(
+        Row(
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               backgroundImage: AssetImage('assets/images/avatar.png'),
               radius: 20,
             ),
-            SizedBox(width: 10),
-            Icon(Icons.notifications_none, size: 28),
+            const SizedBox(width: 10),
+            Container(
+                height: 50,
+                width: 50,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: const Icon(Icons.notifications_none, size: 28)),
           ],
         ),
       ],
@@ -91,24 +104,35 @@ class HomePage extends StackedView<HomeViewModel> {
   }
 
   Widget _buildExerciseIcon(String assetPath, String label) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.grey[200],
-          ),
-          // child: Icon(icon, size: 24),
-          child: SvgPicture.asset(
-            assetPath,
-            width: 24,
-            height: 24,
-          ),
-        ),
-        const SizedBox(height: 5),
-        Text(label, style: const TextStyle(fontSize: 12)),
-      ],
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        // Check if the label is empty to decide the shape
+        shape: label.isEmpty ? BoxShape.circle : BoxShape.rectangle,
+        borderRadius: label.isEmpty ? null : BorderRadius.circular(24),
+        color: Colors.white,
+      ),
+      child: label.isEmpty
+          ? SvgPicture.asset(
+              assetPath,
+              width: 24,
+              height: 24,
+            )
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SvgPicture.asset(
+                  assetPath,
+                  width: 24,
+                  height: 24,
+                ),
+                const SizedBox(width: 8), // Space between the icon and text
+                Text(
+                  label,
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
     );
   }
 
@@ -165,7 +189,7 @@ class HomePage extends StackedView<HomeViewModel> {
       ],
     );
   }
-  
+
   Widget _buildChallengeCard(Challenge challenge) {
     return Container(
       width: 110,
