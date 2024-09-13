@@ -16,17 +16,9 @@ class LoginViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // void login(BuildContext context) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => const HomePage()),
-  //   );
-  // }
-
-   void login() {
+  void login() {
     _navigationService.navigateTo(Routes.homePage);
   }
-
 
   void switchAccount() {}
 }
