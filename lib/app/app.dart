@@ -1,5 +1,5 @@
-import 'package:latana/views/home_page.dart';
-import 'package:latana/views/login_page.dart';
+import 'package:latana/views/pages/home_page.dart';
+import 'package:latana/views/pages/login_page.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 

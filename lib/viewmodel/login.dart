@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:latana/views/home_page.dart';
+import 'package:latana/views/pages/home_page.dart';
 import 'package:stacked/stacked.dart';
 
 class LoginViewModel extends BaseViewModel {

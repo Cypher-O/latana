@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:latana/models/challenge.dart';
 import 'package:latana/viewmodel/home.dart';
+import 'package:latana/views/widgets/floating_bottom_navbar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -10,47 +11,50 @@ class HomePage extends StackedView<HomeViewModel> {
   @override
   Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height,
-              ),
-              child: IntrinsicHeight(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildHeader(viewModel),
-                    const SizedBox(height: 20),
-                    _buildLearnSection(),
-                    const SizedBox(height: 15),
-                    Divider(
-                      color: Colors.grey[300],
-                      thickness: 1,
-                      indent: 16,
-                      endIndent: 16,
+      body: Stack(
+        children: [
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height,
+                  ),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildHeader(viewModel),
+                        const SizedBox(height: 20),
+                        _buildLearnSection(),
+                        const SizedBox(height: 15),
+                        Divider(
+                          color: Colors.grey[300],
+                          thickness: 1,
+                          indent: 16,
+                          endIndent: 16,
+                        ),
+                        _buildContinueLearning(),
+                        const SizedBox(height: 20),
+                        _buildChallenges(viewModel),
+                      ],
                     ),
-                    _buildContinueLearning(),
-                    const SizedBox(height: 20),
-                    _buildChallenges(viewModel),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(
-          bottom: 18.0,
-        ),
-        child: _buildBottomNavBar(viewModel),
+          FloatingBottomNavBar(
+            selectedIndex: viewModel.selectedNavIndex,
+            onItemSelected: viewModel.setSelectedNavIndex,
+          ),
+        ],
       ),
     );
   }
+
 
   Widget _buildHeader(HomeViewModel viewModel) {
     return Row(
@@ -248,34 +252,6 @@ class HomePage extends StackedView<HomeViewModel> {
     );
   }
 
-  // Widget _buildChallengeCard(Challenge challenge) {
-  //   return Container(
-  //     width: 110,
-  //     padding: const EdgeInsets.all(12),
-  //     decoration: BoxDecoration(
-  //       color: challenge.color.withOpacity(0.1),
-  //       borderRadius: BorderRadius.circular(10),
-  //     ),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         challenge.icon is IconData
-  //             ? Icon(challenge.icon as IconData,
-  //                 color: challenge.color, size: 24)
-  //             : SizedBox(
-  //                 width: 24, height: 24, child: challenge.icon as Widget),
-  //         const SizedBox(height: 8),
-  //         Text(challenge.name,
-  //             style:
-  //                 const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-  //         Text(challenge.description, style: const TextStyle(fontSize: 12)),
-  //         const SizedBox(height: 4),
-  //         Text(challenge.duration,
-  //             style: TextStyle(fontSize: 10, color: Colors.grey[600])),
-  //       ],
-  //     ),
-  //   );
-  // }
   Widget _buildChallengeCard(Challenge challenge) {
     return Container(
       width: 140,
@@ -333,30 +309,7 @@ class HomePage extends StackedView<HomeViewModel> {
       ),
     );
   }
-
-  Widget _buildBottomNavBar(HomeViewModel viewModel) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        _buildNavBarItem(Icons.local_fire_department, 'Workout', true),
-        _buildNavBarItem(Icons.play_circle_outline, 'Watch', false),
-        _buildNavBarItem(Icons.list_alt, 'Programs', false),
-        _buildNavBarItem(Icons.bar_chart, 'Activity', false),
-      ],
-    );
-  }
-
-  Widget _buildNavBarItem(IconData icon, String label, bool isActive) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: isActive ? Colors.red : Colors.grey),
-        Text(label,
-            style: TextStyle(color: isActive ? Colors.red : Colors.grey)),
-      ],
-    );
-  }
-
+  
   @override
   HomeViewModel viewModelBuilder(BuildContext context) => HomeViewModel();
 }

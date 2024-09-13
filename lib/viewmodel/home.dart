@@ -5,6 +5,13 @@ import 'package:stacked/stacked.dart';
 
 class HomeViewModel extends BaseViewModel {
   String get userName => 'Jones';
+  int _selectedNavIndex = 0;
+  int get selectedNavIndex => _selectedNavIndex;
+
+  void setSelectedNavIndex(int index) {
+    _selectedNavIndex = index;
+    notifyListeners();
+  }
 
   List<Challenge> get challenges => [
         Challenge(

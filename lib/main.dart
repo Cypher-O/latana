@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:latana/views/login_page.dart';
-import 'package:stacked_services/stacked_services.dart';
+import 'package:latana/views/pages/login_page.dart';
 
 void main() {
   runApp(const MyApp());
