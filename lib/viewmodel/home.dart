@@ -16,8 +16,8 @@ class HomeViewModel extends BaseViewModel {
             width: 24,
             height: 24,
           ),
-          color: Colors.yellow,
-          gradientColors: [Colors.yellow.shade100, Colors.yellow.shade200],
+          color: Colors.amberAccent,
+          gradientColors: [Colors.white, Colors.amber.shade50],
         ),
         Challenge(
           name: 'FASTING',
@@ -29,7 +29,7 @@ class HomeViewModel extends BaseViewModel {
             height: 24,
           ),
           color: Colors.blue,
-          gradientColors: [Colors.blue.shade100, Colors.blue.shade200],
+          gradientColors: [Colors.white, Colors.blue.shade50],
         ),
         Challenge(
           name: 'LIFTING',
@@ -41,7 +41,7 @@ class HomeViewModel extends BaseViewModel {
             height: 24,
           ),
           color: Colors.purple,
-          gradientColors: [Colors.purple.shade100, Colors.purple.shade200],
+          gradientColors: [Colors.white, Colors.purple.shade50],
         ),
       ];
 }
