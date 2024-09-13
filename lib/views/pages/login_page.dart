@@ -92,15 +92,18 @@ class LoginPage extends StackedView<LoginViewModel> {
         // ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Colors.black), // Outline color of black
+          borderSide:
+              const BorderSide(color: Colors.black), // Outline color of black
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Colors.black), // Outline color of black
+          borderSide:
+              const BorderSide(color: Colors.black), // Outline color of black
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Colors.black), // Outline color of black
+          borderSide:
+              const BorderSide(color: Colors.black), // Outline color of black
         ),
         filled: true,
         fillColor: Colors.transparent,
@@ -153,19 +156,27 @@ class LoginPage extends StackedView<LoginViewModel> {
 
   Widget _buildFaceIdLogin(String assetPath) {
     return Center(
-      child: TextButton.icon(
-        onPressed: () {
-          // Handle Face ID login
-        },
-        // icon: const Icon(Icons.face, color: Colors.black),
-        icon: SvgPicture.asset(
-          assetPath,
-          width: 24,
-          height: 24,
-        ),
-        label: const Text(
-          'Login with Face ID',
-          style: TextStyle(color: Colors.black),
+      child: SizedBox(
+        width: double.infinity,
+        child: TextButton.icon(
+          onPressed: () {},
+          icon: SvgPicture.asset(
+            assetPath,
+            width: 24,
+            height: 24,
+          ),
+          label: const Text(
+            'Login with Face ID',
+            style: TextStyle(color: Colors.black),
+          ),
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.grey[100],
+            padding: const EdgeInsets.symmetric(vertical: 16), // Text color
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
         ),
       ),
     );
