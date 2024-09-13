@@ -55,7 +55,6 @@ class HomePage extends StackedView<HomeViewModel> {
     );
   }
 
-
   Widget _buildHeader(HomeViewModel viewModel) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -163,58 +162,61 @@ class HomePage extends StackedView<HomeViewModel> {
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
         ),
         const SizedBox(height: 10),
-        Container(
-          height: 300,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: const DecorationImage(
-              image: AssetImage('assets/images/workout.png'),
-              fit: BoxFit.cover,
+        AspectRatio(
+          aspectRatio: 4 / 3,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              image: const DecorationImage(
+                image: AssetImage('assets/images/workout.png'),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Positioned.fill(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    'assets/images/workout.png',
-                    fit: BoxFit.cover,
+            child: Center(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  // Outer translucent circle
+                  Container(
+                    height: 120,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(0.1),
+                    ),
                   ),
-                ),
-              ),
-              // Translucent circular border
-              Container(
-                height: 120,
-                width: 120,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.2),
-                ),
-                child: SvgPicture.asset(
-                  height: 2,
-                  width: 2,
-                  'assets/images/track.svg',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              // Smaller red circle housing the play icon
-              Container(
-                height: 80,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.red,
-                ),
-                child: const Center(
-                  child: Icon(
-                    Icons.play_arrow_rounded,
-                    size: 60,
-                    color: Colors.white,
+                  // Inner red circle with play icon (bottom layer)
+                  Container(
+                    height: 80,
+                    width: 80,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.red,
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.play_arrow_rounded,
+                        size: 52,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                ),
+                  // Track SVG aligned inside the translucent circle towards the left (top layer)
+                  Positioned(
+                    left: -5,
+                    top: 20,
+                    child: SizedBox(
+                      height: 90,
+                      width: 90,
+                      child: SvgPicture.asset(
+                        'assets/images/track.svg',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ],
@@ -309,7 +311,7 @@ class HomePage extends StackedView<HomeViewModel> {
       ),
     );
   }
-  
+
   @override
   HomeViewModel viewModelBuilder(BuildContext context) => HomeViewModel();
 }
