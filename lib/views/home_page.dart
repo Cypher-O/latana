@@ -13,27 +13,41 @@ class HomePage extends StackedView<HomeViewModel> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(viewModel),
-              const SizedBox(height: 20),
-              _buildLearnSection(),
-              const SizedBox(height: 15),
-              const Divider(
-                color: Colors.grey,
-                thickness: 1,
-                indent: 16,
-                endIndent: 16,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height,
               ),
-              _buildContinueLearning(),
-              const SizedBox(height: 20),
-              _buildChallenges(viewModel),
-              const Spacer(),
-              _buildBottomNavBar(viewModel),
-            ],
+              child: IntrinsicHeight(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildHeader(viewModel),
+                    const SizedBox(height: 20),
+                    _buildLearnSection(),
+                    const SizedBox(height: 15),
+                    Divider(
+                      color: Colors.grey[300],
+                      thickness: 1,
+                      indent: 16,
+                      endIndent: 16,
+                    ),
+                    _buildContinueLearning(),
+                    const SizedBox(height: 20),
+                    _buildChallenges(viewModel),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(
+          bottom: 18.0,
+        ),
+        child: _buildBottomNavBar(viewModel),
       ),
     );
   }
@@ -51,7 +65,7 @@ class HomePage extends StackedView<HomeViewModel> {
             ),
             Text(
               viewModel.userName,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
             ),
           ],
         ),
@@ -142,7 +156,7 @@ class HomePage extends StackedView<HomeViewModel> {
       children: [
         const Text(
           'Continue Learning',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
         ),
         const SizedBox(height: 10),
         Container(
@@ -154,8 +168,49 @@ class HomePage extends StackedView<HomeViewModel> {
               fit: BoxFit.cover,
             ),
           ),
-          child: const Center(
-            child: Icon(Icons.play_circle_fill, size: 60, color: Colors.white),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned.fill(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(
+                    'assets/images/workout.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              // Translucent circular border
+              Container(
+                height: 120,
+                width: 120,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(0.2),
+                ),
+                child: SvgPicture.asset(
+                  height: 2,
+                  width: 2,
+                  'assets/images/track.svg',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              // Smaller red circle housing the play icon
+              Container(
+                height: 80,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.red,
+                ),
+                child: const Center(
+                  child: Icon(
+                    Icons.play_arrow_rounded,
+                    size: 60,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -171,7 +226,7 @@ class HomePage extends StackedView<HomeViewModel> {
           children: [
             Text(
               'Try a Challenge',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
             ),
             Text(
               'View all',
@@ -179,41 +234,101 @@ class HomePage extends StackedView<HomeViewModel> {
             ),
           ],
         ),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: viewModel.challenges
-              .map((challenge) => _buildChallengeCard(challenge))
-              .toList(),
+        const SizedBox(height: 20),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: viewModel.challenges
+                .map((challenge) => _buildChallengeCard(challenge))
+                .toList(),
+          ),
         ),
       ],
     );
   }
 
+  // Widget _buildChallengeCard(Challenge challenge) {
+  //   return Container(
+  //     width: 110,
+  //     padding: const EdgeInsets.all(12),
+  //     decoration: BoxDecoration(
+  //       color: challenge.color.withOpacity(0.1),
+  //       borderRadius: BorderRadius.circular(10),
+  //     ),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         challenge.icon is IconData
+  //             ? Icon(challenge.icon as IconData,
+  //                 color: challenge.color, size: 24)
+  //             : SizedBox(
+  //                 width: 24, height: 24, child: challenge.icon as Widget),
+  //         const SizedBox(height: 8),
+  //         Text(challenge.name,
+  //             style:
+  //                 const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+  //         Text(challenge.description, style: const TextStyle(fontSize: 12)),
+  //         const SizedBox(height: 4),
+  //         Text(challenge.duration,
+  //             style: TextStyle(fontSize: 10, color: Colors.grey[600])),
+  //       ],
+  //     ),
+  //   );
+  // }
   Widget _buildChallengeCard(Challenge challenge) {
     return Container(
-      width: 110,
+      width: 140,
+      height: 160,
+      margin: const EdgeInsets.only(right: 16),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: challenge.color.withOpacity(0.1),
+        gradient: LinearGradient(
+          colors: challenge.gradientColors,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          challenge.icon is IconData
-              ? Icon(challenge.icon as IconData,
-                  color: challenge.color, size: 24)
-              : SizedBox(
-                  width: 24, height: 24, child: challenge.icon as Widget),
+          Container(
+            width: 40,
+            height: 40,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: challenge.icon is IconData
+                  ? Icon(
+                      challenge.icon as IconData,
+                      color: challenge.color,
+                      size: 24,
+                    )
+                  : challenge.icon as Widget,
+            ),
+          ),
           const SizedBox(height: 8),
-          Text(challenge.name,
-              style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-          Text(challenge.description, style: const TextStyle(fontSize: 12)),
-          const SizedBox(height: 4),
-          Text(challenge.duration,
-              style: TextStyle(fontSize: 10, color: Colors.grey[600])),
+          Text(
+            challenge.name.toUpperCase(),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+              color: challenge.color,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            challenge.description,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            challenge.duration,
+            style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+          ),
         ],
       ),
     );

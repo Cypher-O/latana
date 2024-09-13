@@ -4,9 +4,9 @@ class Challenge {
   final String name;
   final String description;
   final String duration;
-  // final IconData icon;
   final dynamic icon;
   final Color color;
+  final List<Color> gradientColors;
 
   Challenge({
     required this.name,
@@ -14,5 +14,6 @@ class Challenge {
     required this.duration,
     required this.icon,
     required this.color,
+    required this.gradientColors,
   });
 }

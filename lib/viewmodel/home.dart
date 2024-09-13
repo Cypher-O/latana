@@ -9,7 +9,7 @@ class HomeViewModel extends BaseViewModel {
   List<Challenge> get challenges => [
         Challenge(
           name: 'SPRINT',
-          description: 'Sprint to Health',
+          description: 'Sprint to\nHealth',
           duration: 'Mar 12 - Mar 30',
           icon: SvgPicture.asset(
             'assets/images/vector-1.svg',
@@ -17,10 +17,11 @@ class HomeViewModel extends BaseViewModel {
             height: 24,
           ),
           color: Colors.yellow,
+          gradientColors: [Colors.yellow.shade100, Colors.yellow.shade200],
         ),
         Challenge(
           name: 'FASTING',
-          description: '4 x 16h Fasts',
+          description: '4 x 16h\nFasts',
           duration: 'Mar 12 - Mar 30',
           icon: SvgPicture.asset(
             'assets/images/vector-2.svg',
@@ -28,10 +29,11 @@ class HomeViewModel extends BaseViewModel {
             height: 24,
           ),
           color: Colors.blue,
+          gradientColors: [Colors.blue.shade100, Colors.blue.shade200],
         ),
         Challenge(
           name: 'LIFTING',
-          description: 'Gain that Muscles',
+          description: 'Gain that\nMuscles',
           duration: 'Mar 12 - Mar 30',
           icon: SvgPicture.asset(
             'assets/images/vector-3.svg',
@@ -39,6 +41,7 @@ class HomeViewModel extends BaseViewModel {
             height: 24,
           ),
           color: Colors.purple,
+          gradientColors: [Colors.purple.shade100, Colors.purple.shade200],
         ),
       ];
 }
