@@ -8,6 +8,22 @@ class HomeViewModel extends BaseViewModel {
   int _selectedNavIndex = 0;
   int get selectedNavIndex => _selectedNavIndex;
 
+  final List<bool> exerciseStates = [true, false, false, false, false];
+  final List<String> exerciseLabels = [
+    "Fast Fist",
+    "Dumbbell",
+    "Cable Bar",
+    "Triceps",
+    "Bench"
+  ];
+
+  void toggleExerciseState(int index) {
+    for (int i = 0; i < exerciseStates.length; i++) {
+      exerciseStates[i] = i == index;
+    }
+    notifyListeners();
+  }
+
   void setSelectedNavIndex(int index) {
     _selectedNavIndex = index;
     notifyListeners();

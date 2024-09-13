@@ -28,7 +28,7 @@ class HomePage extends StackedView<HomeViewModel> {
                       children: [
                         _buildHeader(viewModel),
                         const SizedBox(height: 20),
-                        _buildLearnSection(),
+                        _buildLearnSection(viewModel),
                         const SizedBox(height: 15),
                         Divider(
                           color: Colors.grey[300],
@@ -93,13 +93,38 @@ class HomePage extends StackedView<HomeViewModel> {
     );
   }
 
-  Widget _buildLearnSection() {
+  // Widget _buildLearnSection() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       const SizedBox(
+  //         height: 10.0,
+  //       ),
+  //       Text(
+  //         'Watch and learn how to use',
+  //         style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+  //       ),
+  //       const SizedBox(height: 10),
+  //       Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: [
+  //           _buildExerciseIcon(
+  //               'assets/images/exercise_icon-1.svg', 'Fast Fist'),
+  //           _buildExerciseIcon('assets/images/exercise_icon-2.svg', ''),
+  //           _buildExerciseIcon('assets/images/exercise_icon-3.svg', ''),
+  //           _buildExerciseIcon('assets/images/exercise_icon-4.svg', ''),
+  //           _buildExerciseIcon('assets/images/exercise_icon-5.svg', ''),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
+
+  Widget _buildLearnSection(HomeViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 10.0,
-        ),
+        const SizedBox(height: 10.0),
         Text(
           'Watch and learn how to use',
           style: TextStyle(fontSize: 16, color: Colors.grey[600]),
@@ -107,49 +132,54 @@ class HomePage extends StackedView<HomeViewModel> {
         const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildExerciseIcon(
-                'assets/images/exercise_icon-1.svg', 'Fast Fist'),
-            _buildExerciseIcon('assets/images/exercise_icon-2.svg', ''),
-            _buildExerciseIcon('assets/images/exercise_icon-3.svg', ''),
-            _buildExerciseIcon('assets/images/exercise_icon-4.svg', ''),
-            _buildExerciseIcon('assets/images/exercise_icon-5.svg', ''),
-          ],
+          children: List.generate(viewModel.exerciseStates.length, (index) {
+            final isActive = viewModel.exerciseStates[index];
+            final label = isActive ? viewModel.exerciseLabels[index] : '';
+            return _buildExerciseIcon(
+                index,
+                'assets/images/exercise_icon-${index + 1}.svg',
+                label,
+                isActive,
+                viewModel);
+          }),
         ),
       ],
     );
   }
 
-  Widget _buildExerciseIcon(String assetPath, String label) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        // Check if the label is empty to decide the shape
-        shape: label.isEmpty ? BoxShape.circle : BoxShape.rectangle,
-        borderRadius: label.isEmpty ? null : BorderRadius.circular(24),
-        color: Colors.white,
+  Widget _buildExerciseIcon(int index, String assetPath, String label,
+      bool isActive, HomeViewModel viewModel) {
+    return GestureDetector(
+      onTap: () => viewModel.toggleExerciseState(index),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          shape: isActive ? BoxShape.rectangle : BoxShape.circle,
+          borderRadius: isActive ? BorderRadius.circular(24) : null,
+          color: Colors.white,
+        ),
+        child: isActive
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SvgPicture.asset(
+                    assetPath,
+                    width: 24,
+                    height: 24,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    label,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ],
+              )
+            : SvgPicture.asset(
+                assetPath,
+                width: 24,
+                height: 24,
+              ),
       ),
-      child: label.isEmpty
-          ? SvgPicture.asset(
-              assetPath,
-              width: 24,
-              height: 24,
-            )
-          : Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SvgPicture.asset(
-                  assetPath,
-                  width: 24,
-                  height: 24,
-                ),
-                const SizedBox(width: 8), // Space between the icon and text
-                Text(
-                  label,
-                  style: const TextStyle(fontSize: 12),
-                ),
-              ],
-            ),
     );
   }
 
