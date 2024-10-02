@@ -83,7 +83,7 @@ Please make sure to update tests as appropriate and adhere to the existing codin
 ## App Screenshots
 
 | ![Login Screen](/assets/screenshots/login.png) | ![Home Screen](/assets/screenshots/home.png) |
-|:--:|:--:|:--:|
+|:--:|:--:|
 | Login Screen | Home Screen |
 
 ## License
